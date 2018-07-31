@@ -1,0 +1,24 @@
+@startuml
+skinparam backgroundcolor transparent
+skinparam shadowing false
+skinparam dpi 300
+skinparam componentStyle uml2
+
+left to right direction
+
+skinparam interface  {
+	borderColor black
+  backgroundColor white
+}
+skinparam component {
+  borderColor black
+  backgroundColor white
+  ArrowColor black
+}
+
+component "Компонент 1" as c1
+component "Компонент 2" as c2
+interface "Интерфейс 1" as i1
+c1 --() i1
+c2 --( i1
+@enduml

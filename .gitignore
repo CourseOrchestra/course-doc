@@ -1,0 +1,6 @@
+﻿/asciidoc
+*.bat
+*.txt
+*.xml
+*.pdf
+db_template_examples.html
