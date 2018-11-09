@@ -9,6 +9,7 @@ include::__doc_general_attributes.adoc[]
 
 https://github.com/asciidocfx/AsciidocFX[AsciidocFX] -- удобная точка, с которой можно начать работать в Asciidoctor. Есть две особенности использования _course-asciidoc_ в этом редакторе.
 
+
 . Аттрибут _:lang: ru_ должен быть обязательно первым и находиться непосредственно после заголовка в собираемом документе, а не в подключаемом файле.
 
 . Файлы _fo-pdf.xsl_ и _common.xsl_ необходимо скопировать в директорию _conf\docbook-config\_ установки AsciidocFX.
