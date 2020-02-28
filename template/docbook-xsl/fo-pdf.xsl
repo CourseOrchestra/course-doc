@@ -74,7 +74,7 @@
 	</xsl:template>
 
 	<xsl:template name="pickfont-mono">
-		<xsl:text>PT Serif,Courier New,Dejavu Mono</xsl:text>
+		<xsl:text>PT Mono,Courier New,Dejavu Mono</xsl:text>
 	</xsl:template>
 
 	<xsl:template name="pickfont-symbol">
@@ -313,7 +313,7 @@
 		</fo:inline>
 	</xsl:template>
 
-	<xsl:template match="phrase|db:phrase">
+	<xsl:template match="phrase">
 		<xsl:choose>
 			<xsl:when test="@role='underline'">
 				<fo:inline text-decoration="underline">
@@ -322,15 +322,6 @@
 			</xsl:when>
 			<xsl:when test="@role='line-through'">
 				<fo:inline text-decoration="line-through">
-					<xsl:call-template name="inline.charseq"/>
-				</fo:inline>
-			</xsl:when>
-			<xsl:when test="@role='small'">
-				<xsl:attribute name="font-size">
-					<xsl:value-of select="$body.font.master * 0.8"/>
-					<xsl:text>pt</xsl:text>
-				</xsl:attribute>
-				<fo:inline>
 					<xsl:call-template name="inline.charseq"/>
 				</fo:inline>
 			</xsl:when>
@@ -585,126 +576,9 @@
       Tables
     -->
 
-
-	<xsl:template name="table.cell.properties">
-	  <xsl:param name="bgcolor.pi" select="''"/>
-	  <xsl:param name="rowsep.inherit" select="1"/>
-	  <xsl:param name="colsep.inherit" select="1"/>
-	  <xsl:param name="col" select="1"/>
-	  <xsl:param name="valign.inherit" select="''"/>
-	  <xsl:param name="align.inherit" select="''"/>
-	  <xsl:param name="char.inherit" select="''"/>
-	
-	  <xsl:choose>
-	    <xsl:when test="ancestor::tgroup|ancestor::db:tgroup">
-	      <xsl:if test="$bgcolor.pi != ''">
-	        <xsl:attribute name="background-color">
-	          <xsl:value-of select="$bgcolor.pi"/>
-	        </xsl:attribute>
-	      </xsl:if>
-		<xsl:choose>
-			<xsl:when test="(ancestor::informaltable[contains(concat(' ', @role , ' '), ' form ')]) or (ancestor::db:informaltable[contains(concat(' ', @role , ' '), ' form ')])">
-				<xsl:if test="descendant::emphasis[@role='strong']|descendant::db:emphasis[@role='strong']">
-				        <xsl:call-template name="border">
-				          <xsl:with-param name="side" select="'bottom'"/>
-				        </xsl:call-template>
-				</xsl:if>
-
-			</xsl:when>
-			<xsl:otherwise>
-			      <xsl:if test="$rowsep.inherit &gt; 0">
-			        <xsl:call-template name="border">
-			          <xsl:with-param name="side" select="'bottom'"/>
-			        </xsl:call-template>
-			      </xsl:if>
-	
-			      <xsl:if test="$colsep.inherit &gt; 0 and 
-			                      $col &lt; (ancestor::tgroup/@cols|ancestor::entrytbl/@cols|ancestor::db:tgroup/@cols|ancestor::db:entrytbl/@cols)[last()]">
-			        <xsl:call-template name="border">
-			          <xsl:with-param name="side" select="'end'"/>
-			        </xsl:call-template>
-			      </xsl:if>
-			</xsl:otherwise>
-		</xsl:choose>
-	
-	
-	      <xsl:if test="$valign.inherit != ''">
-	        <xsl:attribute name="display-align">
-	          <xsl:choose>
-	            <xsl:when test="$valign.inherit='top'">before</xsl:when>
-	            <xsl:when test="$valign.inherit='middle'">center</xsl:when>
-	            <xsl:when test="$valign.inherit='bottom'">after</xsl:when>
-	            <xsl:otherwise>
-	              <xsl:message>
-	                <xsl:text>Unexpected valign value: </xsl:text>
-	                <xsl:value-of select="$valign.inherit"/>
-	                <xsl:text>, center used.</xsl:text>
-	              </xsl:message>
-	              <xsl:text>center</xsl:text>
-	            </xsl:otherwise>
-	          </xsl:choose>
-	        </xsl:attribute>
-	      </xsl:if>
-	
-	      <xsl:choose>
-	        <xsl:when test="$align.inherit = 'char' and $char.inherit != ''">
-	          <xsl:attribute name="text-align">
-	            <xsl:value-of select="$char.inherit"/>
-	          </xsl:attribute>
-	        </xsl:when>
-	        <xsl:when test="$align.inherit != ''">
-	          <xsl:attribute name="text-align">
-	            <xsl:value-of select="$align.inherit"/>
-	          </xsl:attribute>
-	        </xsl:when>
-	      </xsl:choose>
-	
-	    </xsl:when>
-	    <xsl:otherwise>
-	      <!-- HTML table -->
-	      <xsl:if test="$bgcolor.pi != ''">
-	        <xsl:attribute name="background-color">
-	          <xsl:value-of select="$bgcolor.pi"/>
-	        </xsl:attribute>
-	      </xsl:if>
-	
-	      <xsl:if test="$align.inherit != ''">
-	        <xsl:attribute name="text-align">
-	          <xsl:value-of select="$align.inherit"/>
-	        </xsl:attribute>
-	      </xsl:if>
-	
-	      <xsl:if test="$valign.inherit != ''">
-	        <xsl:attribute name="display-align">
-	          <xsl:choose>
-	            <xsl:when test="$valign.inherit='top'">before</xsl:when>
-	            <xsl:when test="$valign.inherit='middle'">center</xsl:when>
-	            <xsl:when test="$valign.inherit='bottom'">after</xsl:when>
-	            <xsl:otherwise>
-	              <xsl:message>
-	                <xsl:text>Unexpected valign value: </xsl:text>
-	                <xsl:value-of select="$valign.inherit"/>
-	                <xsl:text>, center used.</xsl:text>
-	              </xsl:message>
-	              <xsl:text>center</xsl:text>
-	            </xsl:otherwise>
-	          </xsl:choose>
-	        </xsl:attribute>
-	      </xsl:if>
-	
-	      <xsl:call-template name="html.table.cell.rules"/>
-	
-	    </xsl:otherwise>
-	  </xsl:choose>
-	
-	</xsl:template>
-
-
-	
-	
 	<xsl:template name="define.cell.padding">
 		<xsl:choose>
-			<xsl:when test="(ancestor::table[contains(concat(' ', @role , ' '), ' container ')] and descendant::informaltable) or (ancestor::db:informaltable[contains(concat(' ', @role , ' '), ' container ')] and descendant::db:informaltable)">
+			<xsl:when test="(ancestor::table[contains(concat(' ', @role , ' '), ' container ')] and descendant::informaltable) or (ancestor::db:table[contains(concat(' ', @role , ' '), ' container ')] and descendant::db:informaltable)">
 					0pt
 			</xsl:when>
 			<xsl:otherwise>
@@ -728,16 +602,7 @@
 		</xsl:attribute>
 	</xsl:attribute-set>
 
-	<xsl:param name="table.frame.border.thickness">
-			<xsl:choose>
-				<xsl:when test="(ancestor::informaltable[contains(concat(' ', @role , ' '), ' form ')]) or (ancestor::db:informaltable[contains(concat(' ', @role , ' '), ' form ')])">
-					1.7pt
-				</xsl:when>
-				<xsl:otherwise>
-					0.7pt
-				</xsl:otherwise>
-			</xsl:choose>
-	</xsl:param>
+	<xsl:param name="table.frame.border.thickness">0.7pt</xsl:param>
 	<xsl:param name="table.cell.border.thickness">0.7pt</xsl:param>
 	<xsl:param name="table.cell.border.color">black</xsl:param>
 	<xsl:param name="table.frame.border.color">black</xsl:param>
@@ -759,25 +624,9 @@
 		</xsl:attribute>
 	</xsl:attribute-set>
 	<xsl:attribute-set name="table.table.properties">
-		<xsl:attribute name="font-family">
-			<xsl:choose>
-				<xsl:when test="(ancestor::informaltable[contains(concat(' ', @role , ' '), ' form ')]) or (ancestor::db:informaltable[contains(concat(' ', @role , ' '), ' form ')])">
-					PT Serif,Cambria,DejaVu Serif
-				</xsl:when>
-				<xsl:otherwise>
-					PT Sans,Calibri,DejaVu Sans
-				</xsl:otherwise>
-			</xsl:choose>
-		</xsl:attribute>
+		<xsl:attribute name="font-family">PT Sans,Calibri,DejaVu Sans</xsl:attribute>
 		<xsl:attribute name="font-size">
-			<xsl:choose>
-				<xsl:when test="(ancestor::informaltable[contains(concat(' ', @role , ' '), ' form ')]) or (ancestor::db:informaltable[contains(concat(' ', @role , ' '), ' form ')])">
-					<xsl:value-of select="$body.font.master"/>
-				</xsl:when>
-				<xsl:otherwise>
-					<xsl:value-of select="$body.font.master * $met.table.font.size"/>
-				</xsl:otherwise>
-			</xsl:choose>
+			<xsl:value-of select="$body.font.master * $met.table.font.size"/>
 			<xsl:text>pt</xsl:text>
 		</xsl:attribute>
 	</xsl:attribute-set>
@@ -1414,16 +1263,17 @@
 	</xsl:attribute-set>
 
 	<!-- override to set different color for book title -->
+        <xsl:template name="beforetitle" mode="book.titlepage.recto.auto.mode">
+          <fo:block id="tpi1___" text-align="center" space-before.minimum="0em"
+          space-before.optimum="0em" space-before.maximum="0em" space-after.minimum="0em"
+          space-after.optimum="0em" space-after.maximum="0em">
+            <fo:block id="tpi2___">
+              <fo:external-graphic xmlns:common="http://www.curs.ru/docbook" src="url(before-title-img.svg)"
+              width="4in" height="auto" content-width="170mm" content-height="scale-down-to-fit" />
+            </fo:block>
+          </fo:block>
+        </xsl:template>
 	<xsl:template match="db:title | title" mode="book.titlepage.recto.auto.mode">
-		<!--fo:block xsl:use-attribute-sets="book.titlepage.recto.style" text-align="center" font-size="24.8832pt" margin-top="-4cm" margin-bottom="-4cm">
-			<fo:external-graphic content-width="14.83cm" src="url(assert.svg)">
-			  </fo:external-graphic>
-
-		</fo:block-->
-		<!--fo:block xsl:use-attribute-sets="book.titlepage.recto.style" text-align="center" font-size="14.4pt" font-family="{$title.fontset}" padding-before="2cm">
-		  <xsl:attribute name="color">black</xsl:attribute>
-		 Название проекта 
-		</fo:block-->
 		<fo:block xsl:use-attribute-sets="book.titlepage.recto.style" text-align="center" font-size="24.8832pt"
                   padding-before="0.5cm">
 		  <!-- FIXME don't use hardcoded value here -->
@@ -1436,14 +1286,19 @@
 			</xsl:call-template>
 		</fo:block>
 	</xsl:template>
-
+        <xsl:template name="aftertitle" mode="book.titlepage.recto.auto.mode">
+          <fo:block id="tpi3___" text-align="center" space-before.minimum="0em"
+          space-before.optimum="0em" space-before.maximum="0em" space-after.minimum="0em"
+          space-after.optimum="0em" space-after.maximum="0em">
+            <fo:block id="tpi4___">
+              <fo:external-graphic xmlns:common="http://www.curs.ru/docbook" src="url(after-title-img.svg)"
+              width="4in" height="auto" content-width="170mm" content-height="scale-down-to-fit" />
+            </fo:block>
+          </fo:block>
+        </xsl:template>
 	<!-- add revision info on title page -->
 	<xsl:template match="db:revision | revision" mode="book.titlepage.recto.auto.mode">
-		<fo:block xsl:use-attribute-sets="book.titlepage.recto.style" text-align="center" font-size="14.4pt" font-family="{$title.fontset}" padding-before="2cm">
-		  <xsl:attribute name="color">black</xsl:attribute>
-		  Код проекта: В-СВ5-2
-		</fo:block>
-		<fo:block xsl:use-attribute-sets="book.titlepage.recto.style" text-align="center" font-size="14.4pt"
+		<fo:block xsl:use-attribute-sets="book.titlepage.recto.style" text-align="center" font-size="14pt"
                   font-family="{$title.fontset}" padding-before="1cm">
 			<xsl:attribute name="color">black</xsl:attribute>
 			<xsl:call-template name="gentext">
@@ -1452,7 +1307,7 @@
 			<xsl:call-template name="gentext.space"/>
 			<xsl:apply-templates select="db:revnumber | revnumber" mode="titlepage.mode"/>
 		</fo:block>
-		<fo:block xsl:use-attribute-sets="book.titlepage.recto.style" text-align="center" font-size="14.4pt"
+		<fo:block xsl:use-attribute-sets="book.titlepage.recto.style" text-align="center" font-size="14pt"
                   font-family="{$title.fontset}">
 			<xsl:attribute name="color">black</xsl:attribute>
 			<xsl:apply-templates select="db:date | date" mode="titlepage.mode"/>
@@ -1461,6 +1316,7 @@
 
 	<!-- override to force use of title, author and one revision on titlepage -->
 	<xsl:template name="book.titlepage.recto">
+                <xsl:call-template name="beforetitle"/>
 		<xsl:choose>
 			<xsl:when test="db:bookinfo/db:title | bookinfo/title">
 				<xsl:apply-templates mode="book.titlepage.recto.auto.mode"
@@ -1473,7 +1329,6 @@
 				<xsl:apply-templates mode="book.titlepage.recto.auto.mode" select="db:title | title"/>
 			</xsl:when>
 		</xsl:choose>
-
 		<xsl:choose>
 			<xsl:when test="db:bookinfo/db:subtitle | bookinfo/subtitle">
 				<xsl:apply-templates mode="book.titlepage.recto.auto.mode"
@@ -1487,7 +1342,7 @@
 				<xsl:apply-templates mode="book.titlepage.recto.auto.mode" select="db:subtitle | subtitle"/>
 			</xsl:when>
 		</xsl:choose>
-
+                <xsl:call-template name="aftertitle"/>
 		<xsl:choose>
 			<xsl:when test="db:bookinfo//db:author | bookinfo//author">
 				<xsl:apply-templates mode="book.titlepage.recto.auto.mode"
@@ -1511,15 +1366,16 @@
 	</xsl:template>
 
 	<!-- cut out these pages -->
-	<xsl:template name="book.titlepage.before.verso"/>
-	<xsl:template name="book.titlepage.verso"/>
+        <xsl:template name="book.titlepage.before.verso"/>
+        <xsl:template name="book.titlepage.verso"/>
 
 
 
 	<!-- appendix title-->
 	
-	<xsl:template match="title | db:title" mode="appendix.titlepage.recto.auto.mode">
-		<fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format" xsl:use-attribute-sets="appendix.titlepage.recto.style" 
+        
+        <xsl:template match="title | db:title" mode="appendix.titlepage.recto.auto.mode">
+            <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format" xsl:use-attribute-sets="appendix.titlepage.recto.style" 
 			margin-left="{$title.margin.left}" font-family="{$title.fontset}" margin-bottom="1cm">
 			<xsl:attribute name="font-size">
 				<xsl:value-of select = "$body.font.master * 2"/>
@@ -1532,7 +1388,6 @@
 		</fo:block>
 	</xsl:template>	
 	
-	table.of.contents.titlepage.recto.auto.mode
 	
 	<!-- table of contents title-->
 	
