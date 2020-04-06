@@ -575,7 +575,7 @@
 	<!--
       Tables
     -->
-
+  
 	<xsl:template name="define.cell.padding">
 		<xsl:choose>
 			<xsl:when test="(ancestor::table[contains(concat(' ', @role , ' '), ' container ')] and descendant::informaltable) or (ancestor::db:table[contains(concat(' ', @role , ' '), ' container ')] and descendant::db:informaltable)">
@@ -1429,27 +1429,40 @@
 	<!--
       Footnotes
     -->
-
+table.footnote.number.format
+  <xsl:param name="table.footnote.number.format">1</xsl:param>
 	<xsl:param name="footnote.number.format">1</xsl:param>
 	<xsl:param name="footnote.number.symbols"/>
 
 	<xsl:param name="footnote.font.size">
-		<xsl:value-of select="$body.font.master * 0.8"/>
+		<xsl:value-of select="$body.font.master * 0.7"/>
 		<xsl:text>pt</xsl:text>
 	</xsl:param>
 
+  	<xsl:attribute-set name="table.footnote.mark.properties">
+		<!-- override font-family for mark since we don't need full font set -->
+		<xsl:attribute name="font-family">
+			<xsl:value-of select="$body.font.family"/>
+		</xsl:attribute>
+		<xsl:attribute name="font-size">
+			<xsl:value-of select="$body.font.master * 0.5"/>
+			<xsl:text>pt</xsl:text>
+		</xsl:attribute>
+		<xsl:attribute name="color">black</xsl:attribute>
+		<xsl:attribute name="font-weight">bold</xsl:attribute>
+		<xsl:attribute name="padding">0 1pt</xsl:attribute>
+	</xsl:attribute-set>
+  
 	<xsl:attribute-set name="footnote.mark.properties">
 		<!-- override font-family for mark since we don't need full font set -->
 		<xsl:attribute name="font-family">
 			<xsl:value-of select="$body.font.family"/>
 		</xsl:attribute>
 		<xsl:attribute name="font-size">
-			<xsl:value-of select="$body.font.master * 0.8"/>
+			<xsl:value-of select="$body.font.master * 0.7"/>
 			<xsl:text>pt</xsl:text>
 		</xsl:attribute>
-		<xsl:attribute name="color">
-			<xsl:value-of select="$link.color"/>
-		</xsl:attribute>
+		<xsl:attribute name="color">black</xsl:attribute>
 		<xsl:attribute name="font-weight">bold</xsl:attribute>
 		<xsl:attribute name="padding">0 1pt</xsl:attribute>
 	</xsl:attribute-set>
