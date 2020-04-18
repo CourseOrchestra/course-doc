@@ -153,6 +153,7 @@
 		<xsl:attribute name="space-after.optimum">0em</xsl:attribute>
 		<xsl:attribute name="space-after.minimum">0.8em</xsl:attribute>
 		<xsl:attribute name="space-after.maximum">1.2em</xsl:attribute>
+                <xsl:attribute name="line-stacking-strategy">font-height</xsl:attribute>
 		<!--
         <xsl:attribute name="color"><xsl:value-of select="$text.color"/></xsl:attribute>
         -->
