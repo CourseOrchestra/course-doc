@@ -147,12 +147,12 @@
 	<!-- normal.para.spacing is the only attribute set applied to all paragraphs -->
 	<xsl:attribute-set name="normal.para.spacing">
 		<xsl:attribute name="text-indent">0</xsl:attribute>
-		<xsl:attribute name="space-before.optimum">0</xsl:attribute>
-		<xsl:attribute name="space-before.minimum">0</xsl:attribute>
-		<xsl:attribute name="space-before.maximum">0</xsl:attribute>
-		<xsl:attribute name="space-after.optimum">0em</xsl:attribute>
-		<xsl:attribute name="space-after.minimum">0.8em</xsl:attribute>
-		<xsl:attribute name="space-after.maximum">1.2em</xsl:attribute>
+		<xsl:attribute name="space-before.optimum">0.8</xsl:attribute>
+		<xsl:attribute name="space-before.minimum">0.6</xsl:attribute>
+		<xsl:attribute name="space-before.maximum">1</xsl:attribute>
+		<xsl:attribute name="space-after.optimum">0.8em</xsl:attribute>
+		<xsl:attribute name="space-after.minimum">0.6em</xsl:attribute>
+		<xsl:attribute name="space-after.maximum">1em</xsl:attribute>
                 <xsl:attribute name="line-stacking-strategy">font-height</xsl:attribute>
 		<!--
         <xsl:attribute name="color"><xsl:value-of select="$text.color"/></xsl:attribute>
@@ -473,15 +473,24 @@
      -->
 
 	<xsl:attribute-set name="formal.object.properties">
-		<xsl:attribute name="space-before.minimum">0.8em</xsl:attribute>
-		<xsl:attribute name="space-before.optimum">1em</xsl:attribute>
-		<xsl:attribute name="space-before.maximum">1.2em</xsl:attribute>
-		<xsl:attribute name="space-after.minimum">0.8em</xsl:attribute>
-		<xsl:attribute name="space-after.optimum">1em</xsl:attribute>
-		<xsl:attribute name="space-after.maximum">1.2em</xsl:attribute>
+		<xsl:attribute name="space-before.minimum">0.6em</xsl:attribute>
+		<xsl:attribute name="space-before.optimum">0.8em</xsl:attribute>
+		<xsl:attribute name="space-before.maximum">1em</xsl:attribute>
+		<xsl:attribute name="space-after.minimum">0.6em</xsl:attribute>
+		<xsl:attribute name="space-after.optimum">0.8em</xsl:attribute>
+		<xsl:attribute name="space-after.maximum">1em</xsl:attribute>
 		<!-- Make examples, tables etc. break across pages -->
 		<!--<xsl:attribute name="keep-together.within-column">always</xsl:attribute>-->
 	</xsl:attribute-set>
+
+        <xsl:attribute-set name="informal.object.properties">
+          <xsl:attribute name="space-before.minimum">0.6em</xsl:attribute>
+          <xsl:attribute name="space-before.optimum">0.8em</xsl:attribute>
+          <xsl:attribute name="space-before.maximum">1em</xsl:attribute>
+          <xsl:attribute name="space-after.minimum">0.6em</xsl:attribute>
+          <xsl:attribute name="space-after.optimum">0.8em</xsl:attribute>
+          <xsl:attribute name="space-after.maximum">1em</xsl:attribute>
+        </xsl:attribute-set>
 	<!--
         <xsl:param name="formal.title.placement">
             figure after
@@ -1141,18 +1150,18 @@
 
 
 	<xsl:attribute-set name="list.block.spacing">
-		<xsl:attribute name="space-before.optimum">1em</xsl:attribute>
-		<xsl:attribute name="space-before.minimum">0.8em</xsl:attribute>
-		<xsl:attribute name="space-before.maximum">1.2em</xsl:attribute>
-		<xsl:attribute name="space-after.optimum">1em</xsl:attribute>
-		<xsl:attribute name="space-after.minimum">0.8em</xsl:attribute>
-		<xsl:attribute name="space-after.maximum">1.2em</xsl:attribute>
+		<xsl:attribute name="space-before.optimum">0.8em</xsl:attribute>
+		<xsl:attribute name="space-before.minimum">0.6em</xsl:attribute>
+		<xsl:attribute name="space-before.maximum">1em</xsl:attribute>
+		<xsl:attribute name="space-after.optimum">0.8em</xsl:attribute>
+		<xsl:attribute name="space-after.minimum">0.6em</xsl:attribute>
+		<xsl:attribute name="space-after.maximum">1em</xsl:attribute>
 	</xsl:attribute-set>
 
 	<xsl:attribute-set name="list.item.spacing">
-          <xsl:attribute name="space-before.optimum">1em</xsl:attribute>
-          <xsl:attribute name="space-before.minimum">0.8em</xsl:attribute>
-          <xsl:attribute name="space-before.maximum">1.2em</xsl:attribute>
+		<xsl:attribute name="space-before.optimum">0.8em</xsl:attribute>
+		<xsl:attribute name="space-before.minimum">0.6em</xsl:attribute>
+		<xsl:attribute name="space-before.maximum">1em</xsl:attribute>
 	</xsl:attribute-set>
 
 	<xsl:attribute-set name="variablelist.term.properties">
